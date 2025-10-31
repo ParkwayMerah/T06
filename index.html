@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>T06.1 - Interactive Histogram (Filtering)</title>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/visualisations.css" />
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>T06.1 - Interactive Histogram</h1>
+    <p>Energy Consumption of TVs by Screen Technology</p>
+  </header>
+
+  <main>
+    <div id="filters"></div>
+    <div id="histogram"></div>
+  </main>
+
+  <footer>
+    <small>Built for T06.1 | COS30045 Data Visualisation</small>
+  </footer>
+
+  <!-- JS load order -->
+  <script src="js/shared-constants.js"></script>
+  <script src="js/histogram.js"></script>
+  <script src="js/interactions.js"></script>
+  <script src="js/load-data.js"></script>
+</body>
+</html>
