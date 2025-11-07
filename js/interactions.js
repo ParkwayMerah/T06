@@ -1,6 +1,47 @@
-// ===== TOOLTIP FOR SCATTERPLOT =====
+// ===== HISTOGRAM FILTER BUTTONS =====
+function populateFilters(data) {
+  const filterDiv = d3.select("#filters");
+  filterDiv.selectAll("*").remove();
+
+  const buttons = filterDiv.selectAll("button")
+    .data(filters_screen)
+    .join("button")
+    .attr("class", d => d.isActive ? "active" : "")
+    .text(d => d.label)
+    .on("click", function(event, d) {
+      filters_screen.forEach(f => f.isActive = (f.id === d.id));
+      buttons.classed("active", f => f.isActive);
+      updateHistogram(d.id, data);
+    });
+}
+
+function updateHistogram(selectedId, data) {
+  let filteredData = data;
+  if (selectedId !== "all") {
+    filteredData = data.filter(d => d.screenTech === selectedId);
+  }
+
+  const maxEnergy = d3.max(filteredData, d => d.energyConsumption);
+  const binGenerator = createBinGenerator(maxEnergy);
+  const bins = binGenerator(filteredData);
+  const maxFrequency = d3.max(bins, d => d.length);
+
+  const container = d3.select("#histogram svg g");
+  const h = 450 - 20 - 50;
+
+  const y = d3.scaleLinear().domain([0, maxFrequency]).range([h, 0]);
+
+  container.selectAll("rect")
+    .data(bins)
+    .join("rect")
+    .transition()
+    .duration(800)
+    .attr("y", d => y(d.length))
+    .attr("height", d => h - y(d.length));
+}
+
+// ===== SCATTERPLOT TOOLTIP =====
 function createTooltip() {
-  // Tooltip group inside scatterplot chart
   const tooltip = innerChartS.append("g")
     .attr("class", "tooltip")
     .style("opacity", 0);
@@ -24,9 +65,8 @@ function createTooltip() {
 }
 
 function handleMouseEvents(tooltip) {
-  // Select all scatter circles
   innerChartS.selectAll("circle")
-    .on("mouseenter", function (event, d) {
+    .on("mouseenter", function(event, d) {
       const x = +d3.select(this).attr("cx");
       const y = +d3.select(this).attr("cy");
 
@@ -37,7 +77,7 @@ function handleMouseEvents(tooltip) {
         .duration(200)
         .style("opacity", 1);
     })
-    .on("mouseleave", function () {
+    .on("mouseleave", function() {
       tooltip.transition().duration(200).style("opacity", 0);
     });
 }

@@ -12,18 +12,15 @@ function drawScatterplot(data) {
       .attr("width", width)
       .attr("height", height);
   
-    // Create group for the inner chart and store globally
     innerChartS = svg.append("g")
       .attr("transform", `translate(${margin.left},${margin.top})`);
   
-    // Scales
     const maxEnergy = d3.max(data, d => d.energyConsumption);
     const maxStar = d3.max(data, d => +d.star2);
   
     xScaleS = d3.scaleLinear().domain([0, maxStar]).range([0, w]);
     yScaleS = d3.scaleLinear().domain([0, maxEnergy]).range([h, 0]);
   
-    // Circles
     innerChartS.selectAll("circle")
       .data(data)
       .join("circle")
@@ -33,14 +30,12 @@ function drawScatterplot(data) {
       .attr("fill", d => colorScale(d.screenTech))
       .attr("opacity", 0.6);
   
-    // Axes
     innerChartS.append("g")
       .attr("transform", `translate(0,${h})`)
       .call(d3.axisBottom(xScaleS));
   
     innerChartS.append("g").call(d3.axisLeft(yScaleS));
   
-    // Labels
     innerChartS.append("text")
       .attr("x", w / 2)
       .attr("y", h + 40)
@@ -64,7 +59,6 @@ function drawScatterplot(data) {
       .attr("transform", (d, i) => `translate(${i * 100},${-10})`);
   
     legend.append("rect")
-      .attr("x", 0)
       .attr("width", 14)
       .attr("height", 14)
       .attr("fill", d => colorScale(d));
@@ -74,4 +68,5 @@ function drawScatterplot(data) {
       .attr("y", 12)
       .attr("fill", "#1e293b")
       .text(d => d);
-  }  
+  }
+  
