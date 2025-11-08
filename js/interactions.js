@@ -1,4 +1,3 @@
-// ===== HISTOGRAM FILTER BUTTONS =====
 function populateFilters(data) {
   const filterDiv = d3.select("#filters");
   filterDiv.selectAll("*").remove();
@@ -40,7 +39,6 @@ function updateHistogram(selectedId, data) {
     .attr("height", d => h - y(d.length));
 }
 
-// ===== SCATTERPLOT TOOLTIP =====
 function createTooltip() {
   const tooltip = innerChartS.append("g")
     .attr("class", "tooltip")

@@ -8,7 +8,7 @@
     screenSize: +d.screenSize
   }));
 
-  console.log("✅ Loaded data:", data.length, "rows");
+  console.log("Loaded data:", data.length, "rows");
 
   populateFilters(data);
   drawHistogram(data);

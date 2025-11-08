@@ -51,7 +51,6 @@ function drawScatterplot(data) {
       .attr("fill", "#1e293b")
       .text("Energy Consumption (kWh/year)");
   
-    // Legend
     const legend = innerChartS.selectAll(".legend")
       .data(colorScale.domain())
       .join("g")
@@ -68,5 +67,4 @@ function drawScatterplot(data) {
       .attr("y", 12)
       .attr("fill", "#1e293b")
       .text(d => d);
-  }
-  
+  }  
